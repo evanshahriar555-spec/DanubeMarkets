@@ -1,0 +1,61 @@
+name: Java 25 build and package
+
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["homework.jar", "docs/**", "README.md"]
+  pull_request:
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack existing draft for initial build
+        if: ${{ hashFiles('pom.xml') == '' }}
+        run: unzip -o project-source.zip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Build React assets
+        working-directory: frontend
+        run: npm ci && npm run build
+      - name: Run tests and package executable
+        run: mvn -B clean verify
+      - name: Prepare root executable
+        run: cp target/homework.jar homework.jar
+      - name: Preserve test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-java25
+          path: target/surefire-reports/
+      - name: Publish build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DanubeMarkets-Java25
+          include-hidden-files: true
+          path: |
+            homework.jar
+            pom.xml
+            src/
+            frontend/
+            !frontend/node_modules/
+            docs/
+            README.md
+            run.bat
+            build.bat
+            .gitignore
+            .github/workflows/build.yml
+
