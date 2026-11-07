@@ -9,7 +9,8 @@ public class Category {
   @Id
   @NotBlank
   @Size(max = 60)
-  @Pattern(regexp = "[A-Za-z0-9 _-]+")
+  // Match frontend trimming: allow spaces inside names, not at either end.
+  @Pattern(regexp = "[A-Za-z0-9_-]+(?: +[A-Za-z0-9_-]+)*")
   public String cname;
 
   @NotNull
