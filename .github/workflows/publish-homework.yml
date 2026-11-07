@@ -1,6 +1,13 @@
 name: Publish homework source and JAR
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'frontend/**'
+      - 'pom.xml'
+      - '.github/workflows/publish-homework.yml'
 permissions:
   contents: read
 concurrency:
