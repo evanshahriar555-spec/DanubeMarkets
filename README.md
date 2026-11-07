@@ -29,13 +29,23 @@ Bootswatch Darkly responsive theme; MNB SOAP with Chart.js; OANDA practice accou
 
 ## Remaining submission work
 
-- [ ] Tamer accepts the collaborator invitation.
+- [x] Tamer accepted the repository collaborator invitation (repository Write access verified on 7 November 2026).
 - [ ] Configure OANDA v20 practice access locally and capture successful results for all six Forex functions. Never commit tokens or passwords.
 - [ ] Record genuine implementation changes and reviews from both members, with task ownership and meaningful development stages.
 - [ ] Complete the illustrated PDF (at least ten pages), including the repository URL, actual contribution record, test evidence and OANDA screenshots.
 - [ ] Each member submits their own Name-NeptunCode.pdf to Teams. Keep private evaluation credentials out of this public repository.
 
-Project board: https://github.com/users/evanshahriar555-spec/projects/2
+Project board: https://github.com/users/evanshahriar555-spec/projects/4
+
+Active issues for actual verification and improvement:
+- [#1 — Documentation review and submission evidence](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/1) — Shahriar
+- [#2 — React CRUD and H2 persistence](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/2) — Tamer
+- [#3 — OANDA practice-workflow review](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/3) — Tamer
+- [#4 — MNB SOAP and chart edge cases](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/4) — Shahriar
+- [#5 — Calculator edge-case coverage](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/5) — Shahriar
+- [#6 — Final package and evidence](https://github.com/evanshahriar555-spec/DanubeMarkets/issues/6) — Both
+
+These assignments are planned work, not evidence of completed implementation. Record actual commits, reviews and results when performed.
 
 ## Build and test
 
