@@ -108,7 +108,7 @@ class WebTests {
                 .contentType("application/json")
                 .content(payload))
         .andExpect(status().isCreated());
-    mvc.perform(delete("/api/categories/test%20pizza%20category").with(csrf()))
+    mvc.perform(delete("/api/categories/{name}", "test pizza category").with(csrf()))
         .andExpect(status().isNoContent());
   }
 
