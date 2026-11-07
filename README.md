@@ -7,30 +7,36 @@ Java 25 Spring Boot coursework: MNB exchange rates and OANDA practice trading.
 - Shahriar Mir Munem — C2TB9P — @evanshahriar555-spec
 - Tamer Al Fares — Q542ZU — @tameralfares130-ui
 
-## Status
+## Run locally
 
-Repository setup is in progress. An existing application draft has been supplied; source and the final executable are not yet published here. This initial commit records setup, not previous development or individual authorship.
-
-## Delivery checklist
-
-- [ ] Import and review existing draft source with accurate provenance.
-- [ ] Save both creators in the default footer configuration and rebuild.
-- [ ] Configure OANDA v20 practice access and capture account, current price, ten historical prices, opening, positions and closing results.
-- [ ] Record genuine contributions from both members across at least five meaningful development states, with assigned tasks and reviews.
-- [ ] Preserve automated test execution evidence and React/Axios CRUD evidence; H2 files belong under C:\data.
-- [ ] Publish final matching source and homework.jar at repository root.
-- [ ] Complete the illustrated PDF (at least ten pages) with actual contributions, repository URL and screenshots. Each member submits their own Name-NeptunCode.pdf to Teams.
-
-The application draft includes Bootswatch Darkly, MNB SOAP with Chart.js, OANDA forms, calculator tests and built React CRUD. OANDA authenticated operations are still pending.
-
-Do not commit passwords, API tokens, database files or a PDF containing private evaluation credentials. Imported code must not be represented as a fabricated collaboration history.
-
-## Final launch
-
-Once published, run the executable with Java 25:
+Download homework.jar from this repository root and run with Java 25:
 
 ```sh
 java -jar homework.jar
 ```
 
-Open http://localhost:8080.
+Open http://localhost:8080. H2 data is stored under C:\data on Windows.
+
+## Published status
+
+The imported application source and rebuilt homework.jar are now at the repository root. The Java 25 publication workflow passed on 7 November 2026, including the Maven tests and React build. Both creator names are in the default application configuration.
+
+The source was imported from an existing assisted draft. Repository setup and automated publication commits do not establish five collaborative development stages or individual authorship. Actual contributions and reviews must still be recorded by the team.
+
+## Features
+
+Bootswatch Darkly responsive theme; MNB SOAP with Chart.js; OANDA practice account/prices/history/open/positions/close; calculator with JUnit and MockMvc tests; built React/Axios CRUD with file-backed H2.
+
+## Remaining submission work
+
+- [ ] Tamer accepts the collaborator invitation.
+- [ ] Configure OANDA v20 practice access locally and capture successful results for all six Forex functions. Never commit tokens or passwords.
+- [ ] Record genuine implementation changes and reviews from both members, with task ownership and meaningful development stages.
+- [ ] Complete the illustrated PDF (at least ten pages), including the repository URL, actual contribution record, test evidence and OANDA screenshots.
+- [ ] Each member submits their own Name-NeptunCode.pdf to Teams. Keep private evaluation credentials out of this public repository.
+
+Project board: https://github.com/users/evanshahriar555-spec/projects/2
+
+## Build and test
+
+Use JDK 25, Maven and Node.js. In frontend, run npm ci and npm run build, then run mvn clean verify at the repository root. Copy target/homework.jar to homework.jar after rebuilding. The manual Publish homework source and JAR workflow performs the same build and commits the matching executable.
