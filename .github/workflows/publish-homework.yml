@@ -1,0 +1,43 @@
+name: Publish homework source and JAR
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: publish-homework
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import source if not yet unpacked
+        if: ${{ hashFiles('pom.xml') == '' }}
+        run: unzip -o project-source.zip
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Build React
+        working-directory: frontend
+        run: npm ci && npm run build
+      - name: Verify and package
+        run: mvn -B clean verify
+      - name: Publish matching source and root executable
+        run: |
+          cp target/homework.jar homework.jar
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .gitignore pom.xml src frontend docs build.bat run.bat homework.jar
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish imported source and verified Java 25 executable"
+          git push origin HEAD:main
