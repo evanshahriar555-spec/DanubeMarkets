@@ -28,6 +28,12 @@ public class MnbService {
     var doc = xml(text);
     var result = doc.getElementsByTagNameNS("*", "GetExchangeRatesResult");
     if (result.getLength() > 0) doc = xml(result.item(0).getTextContent());
+    // A malformed or fault-only SOAP response must not look like a valid empty
+    // exchange-rate interval (e.g. weekends or public holidays).
+    var root = doc.getDocumentElement();
+    if (!"MNBExchangeRates".equals(root.getLocalName())
+        && !"MNBExchangeRates".equals(root.getNodeName()))
+      throw new IllegalArgumentException("Invalid MNB exchange-rate response.");
     var days = doc.getElementsByTagName("Day");
     var list = new ArrayList<Rate>();
     for (int i = 0; i < days.getLength(); i++) {
@@ -35,11 +41,13 @@ public class MnbService {
       var rs = day.getElementsByTagName("Rate");
       for (int k = 0; k < rs.getLength(); k++) {
         var r = (Element) rs.item(k);
+        int unit = Integer.parseInt(r.getAttribute("unit"));
+        if (unit <= 0) throw new IllegalArgumentException("Invalid MNB rate unit.");
         list.add(
             new Rate(
                 day.getAttribute("date"),
                 r.getAttribute("curr"),
-                Integer.parseInt(r.getAttribute("unit")),
+                unit,
                 new BigDecimal(r.getTextContent().trim().replace(',', '.'))));
       }
     }
