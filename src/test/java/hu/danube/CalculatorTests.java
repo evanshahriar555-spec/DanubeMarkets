@@ -28,6 +28,29 @@ class CalculatorTests {
         new BigDecimal(expected).compareTo(c.calculate(new BigDecimal(a), new BigDecimal(b), op)));
   }
 
+  @ParameterizedTest
+  @CsvSource({
+    "1000,1,1000",
+    "12300,10,1230",
+    "1,6,0.1666666667",
+    "-1,6,-0.1666666667",
+    "1,-8,-0.125"
+  })
+  void divisionDisplaysPlainDecimalResults(String a, String b, String expected) {
+    BigDecimal result = c.calculate(new BigDecimal(a), new BigDecimal(b), "divide");
+    assertEquals(expected, result.toString());
+    assertTrue(result.scale() >= 0, "Division result must not use scientific notation");
+  }
+
+  @Test
+  void negativeZeroDivisorIsRejected() {
+    IllegalArgumentException error =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> c.calculate(BigDecimal.ONE, new BigDecimal("-0.000"), "divide"));
+    assertEquals("Cannot divide by zero.", error.getMessage());
+  }
+
   @Test
   void zero() {
     assertThrows(
