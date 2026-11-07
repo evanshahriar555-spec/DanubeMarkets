@@ -87,6 +87,55 @@ class WebTests {
         .andExpect(status().isNotFound());
   }
 
+  @ParameterizedTest
+  @ValueSource(strings = {" leading", "trailing ", " both ", "  "})
+  void rejectsCategoryNamesWithOuterSpaces(String name) throws Exception {
+    String payload = "{\"cname\":\"" + name + "\",\"price\":12.50}";
+    mvc.perform(
+            post("/api/categories")
+                .with(csrf())
+                .contentType("application/json")
+                .content(payload))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void allowsSpacesInsideCategoryName() throws Exception {
+    String payload = "{\"cname\":\"test pizza category\",\"price\":12.50}";
+    mvc.perform(
+            post("/api/categories")
+                .with(csrf())
+                .contentType("application/json")
+                .content(payload))
+        .andExpect(status().isCreated());
+    mvc.perform(delete("/api/categories/{name}", "test pizza category").with(csrf()))
+        .andExpect(status().isNoContent());
+  }
+
+  @Test
+  void rejectsRenameOfPrimaryKey() throws Exception {
+    String original = "{\"cname\":\"rename-source\",\"price\":100}";
+    mvc.perform(
+            post("/api/categories")
+                .with(csrf())
+                .contentType("application/json")
+                .content(original))
+        .andExpect(status().isCreated());
+    try {
+      mvc.perform(
+              put("/api/categories/rename-source")
+                  .with(csrf())
+                  .contentType("application/json")
+                  .content("{\"cname\":\"rename-target\",\"price\":100}"))
+          .andExpect(status().isBadRequest());
+      mvc.perform(get("/api/categories"))
+          .andExpect(jsonPath("$[?(@.cname=='rename-source')]").exists());
+    } finally {
+      mvc.perform(delete("/api/categories/rename-source").with(csrf()))
+          .andExpect(status().isNoContent());
+    }
+  }
+
   @Test
   void invalidCategory() throws Exception {
     mvc.perform(
