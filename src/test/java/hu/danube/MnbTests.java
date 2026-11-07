@@ -38,6 +38,37 @@ class MnbTests {
   }
 
   @Test
+  void validEmptyResponseIsAllowedForNonBusinessDays() throws Exception {
+    assertTrue(MnbService.parse("<MNBExchangeRates/>").isEmpty());
+  }
+
+  @Test
+  void malformedPayloadIsNotTreatedAsEmptyRates() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> MnbService.parse("<UnexpectedResponse/>"));
+  }
+
+  @Test
+  void soapFaultIsNotTreatedAsEmptyRates() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> MnbService.parse(
+            "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>"
+                + "<s:Body><s:Fault><faultstring>Unavailable</faultstring></s:Fault>"
+                + "</s:Body></s:Envelope>"));
+  }
+
+  @Test
+  void zeroAndNegativeUnitsAreRejected() {
+    for (int unit : new int[] {0, -100}) {
+      String xml = "<MNBExchangeRates><Day date='2026-01-02'><Rate curr='JPY'"
+          + " unit='" + unit + "'>234,56</Rate></Day></MNBExchangeRates>";
+      assertThrows(IllegalArgumentException.class, () -> MnbService.parse(xml));
+    }
+  }
+
+  @Test
   void invalidDates() {
     assertThrows(
         IllegalArgumentException.class,
