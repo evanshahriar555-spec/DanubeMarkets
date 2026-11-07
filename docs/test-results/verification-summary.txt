@@ -1,0 +1,12 @@
+Java: Eclipse Temurin 25.0.5+8
+Command: mvn -o -B verify
+
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.341 s -- in hu.danube.OandaValidationTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.394 s -- in hu.danube.ResponseRenderingTests
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.051 s -- in hu.danube.WebTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in hu.danube.CalculatorTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in hu.danube.MnbTests
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  9.721 s
+[INFO] Finished at: 2026-11-06T20:06:00+01:00

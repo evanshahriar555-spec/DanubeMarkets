@@ -1,0 +1,38 @@
+PASS page /
+PASS page /soap
+PASS page /forex/account
+PASS page /forex/actprice
+PASS page /forex/histprice
+PASS page /forex/open
+PASS page /forex/pos
+PASS page /forex/close
+PASS page /test
+PASS page /react
+PASS React create/update/delete
+MNB page: OFFICIAL DATA / SOAP CLIENT
+
+MNB exchange rates
+
+Explore Hungarian forint exchange rates over time.
+
+Currency
+EUR
+USD
+GBP
+CHF
+JPY
+PLN
+CZK
+AUD
+CAD
+Start date
+End date
+Load exchange rates
+Date	Currency	Quoted units	HUF per quoted units
+2026-10-20	EUR	1	363.03000
+2026-10-21	EUR	1	365.28000
+2026-10-22	EUR	1	366.52000
+2026-10-26	EUR	1	366.95000
+2026-10-27	EUR	1	367.14
+Mobile overflow: false
+PASS no browser JavaScript errors

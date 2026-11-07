@@ -1,0 +1,11 @@
+/target/
+/frontend/node_modules/
+/data/
+/C:/
+*.mv.db
+*.trace.db
+.env
+application-local.properties
+.idea/
+.vscode/
+# homework.jar deliberately NOT ignored: mandatory root artifact

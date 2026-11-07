@@ -1,0 +1,2 @@
+PASS: created category survives full Java process restart.
+PASS: deletion survives full Java process restart.

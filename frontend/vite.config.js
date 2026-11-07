@@ -1,0 +1,1 @@
+import {defineConfig} from 'vite';export default defineConfig({define:{'process.env.NODE_ENV':JSON.stringify('production')},build:{outDir:'../src/main/resources/static/react-assets',emptyOutDir:true,lib:{entry:'src/main.jsx',formats:['es'],fileName:()=> 'app.js'},rollupOptions:{output:{inlineDynamicImports:true}}}});
