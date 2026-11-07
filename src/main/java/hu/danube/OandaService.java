@@ -64,14 +64,27 @@ public class OandaService {
     return "/accounts/" + account;
   }
 
+  static JsonNode requiredObject(JsonNode response, String field) {
+    JsonNode value = response == null ? null : response.get(field);
+    if (value == null || !value.isObject())
+      throw new IllegalStateException("Invalid OANDA response: missing or invalid " + field + " object.");
+    return value;
+  }
+
+  static JsonNode requiredArray(JsonNode response, String field) {
+    JsonNode value = response == null ? null : response.get(field);
+    if (value == null || !value.isArray())
+      throw new IllegalStateException("Invalid OANDA response: missing or invalid " + field + " array.");
+    return value;
+  }
+
   public JsonNode account() {
-    return request("GET", base() + "/summary", null).path("account");
+    return requiredObject(request("GET", base() + "/summary", null), "account");
   }
 
   public List<String> instruments() {
     var out = new ArrayList<String>();
-    request("GET", base() + "/instruments", null)
-        .path("instruments")
+    requiredArray(request("GET", base() + "/instruments", null), "instruments")
         .forEach(n -> out.add(n.path("name").asText()));
     Collections.sort(out);
     return out;
@@ -84,23 +97,24 @@ public class OandaService {
 
   public JsonNode price(String s) {
     instrument(s);
-    return request("GET", base() + "/pricing?instruments=" + s, null).path("prices");
+    return requiredArray(request("GET", base() + "/pricing?instruments=" + s, null), "prices");
   }
 
   public JsonNode history(String s, String g) {
     instrument(s);
     if (!List.of("M1", "M5", "M15", "M30", "H1", "H4", "D", "W", "M").contains(g))
       throw new IllegalArgumentException("Invalid granularity.");
-    return request("GET", "/instruments/" + s + "/candles?count=10&price=M&granularity=" + g, null)
-        .path("candles");
+    return requiredArray(
+        request("GET", "/instruments/" + s + "/candles?count=10&price=M&granularity=" + g, null),
+        "candles");
   }
 
   public JsonNode positions() {
-    return request("GET", base() + "/openPositions", null).path("positions");
+    return requiredArray(request("GET", base() + "/openPositions", null), "positions");
   }
 
   public JsonNode trades() {
-    return request("GET", base() + "/openTrades", null).path("trades");
+    return requiredArray(request("GET", base() + "/openTrades", null), "trades");
   }
 
   public JsonNode open(String s, long units) {
